@@ -7,6 +7,10 @@ export S3_BUCKET=${PROJECT_ID}-${AWS_ACCOUNT}-${AWS_REGION}
 aws s3api create-bucket --bucket ${S3_BUCKET} --region ${AWS_REGION} --create-bucket-configuration LocationConstraint=${AWS_REGION}
 aws s3api put-bucket-versioning --bucket ${S3_BUCKET} --versioning-configuration Status=Enabled
 
+echo "Installing the dependencies & Unit-Testing ..."
+npm install
+npm run test
+
 sam deploy --stack-name ${PROJECT_ID}                   \
            --region ${AWS_REGION} --confirm-changeset --no-fail-on-empty-changeset \
            --capabilities CAPABILITY_NAMED_IAM          \
