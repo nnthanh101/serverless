@@ -11,6 +11,7 @@ echo "Installing the dependencies & Unit-Testing ..."
 npm install
 npm run test
 
+sam build
 sam deploy --stack-name ${PROJECT_ID}                   \
            --region ${AWS_REGION} --confirm-changeset --no-fail-on-empty-changeset \
            --capabilities CAPABILITY_NAMED_IAM          \
@@ -21,12 +22,24 @@ sam deploy --stack-name ${PROJECT_ID}                   \
               Project=${PROJECT_ID}
 
 echo "Testing AWS cloud resources from local development environments ..."
-./get-vars.py sam-rest > local-env.json
+
+echo "Please verify the Boto3 >> `pip3 install boto3` ..."
+./get-vars.py ${PROJECT_ID} > local-env.json
           
+## Unit Test
+echo "Unit Test ..."
 sam local invoke --env-vars local-env.json    \
           getAllItemsFunction                 \
           -e events/employee-service/event-get-all-items.json
          #  getByIdFunction                     \
          #  -e events/employee-service/event-get-by-id.json
          #  putItemFunction                     \
-         #  -e events/employee-service/event-post-item.json         
+         #  -e events/employee-service/event-post-item.json 
+
+## Integration Test
+echo "Integration Test ..."
+AWS_SAM_STACK_NAME=${PROJECT_ID} npm run integ-test
+
+## Danger!!! Cleanup
+# echo "Cleanup ..."
+# aws cloudformation delete-stack --stack-name ${PROJECT_ID}
