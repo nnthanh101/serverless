@@ -34,22 +34,23 @@ aws ecr get-login-password \
         --region ${AWS_REGION} | docker login --username AWS \
         --password-stdin ${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com                          
 
-## FIXME 1
-# sam deploy --stack-name ${PROJECT_ID}                   \
-#            --template-file template.yml                 \
-#            --image-repository ${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT_ID} \
-#            --image-repositories CrawlFunction=${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT_ID} \
-#            --s3-bucket ${S3_BUCKET} --s3-prefix ${PROJECT_ID}                        \
-#            --region ${AWS_REGION} --confirm-changeset --no-fail-on-empty-changeset   \
-#            --capabilities CAPABILITY_NAMED_IAM          \
-#            --config-file samconfig.toml                 \
-#            --no-confirm-changeset                       \
-#            --tags \
-#               Project=${PROJECT_ID}
+## Deploying in a CI/CD pipeline
+sam package --output-template-file packaged-template.yaml \
+            --image-repository ${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT_ID}
 
-## FIXME 2
-# sam package --output-template-file packaged-template.yaml \
-#             --image-repository ${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT_ID}
+## Deploying the Application
+## For multiple repositories
+## --image-repositories CrawlFunction=${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT_ID} \
+sam deploy --stack-name ${PROJECT_ID}                   \
+           --template-file packaged-template.yaml       \
+           --image-repository ${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/${PROJECT_ID} \
+           --s3-bucket ${S3_BUCKET} --s3-prefix ${PROJECT_ID}                        \
+           --region ${AWS_REGION} --confirm-changeset --no-fail-on-empty-changeset   \
+           --capabilities CAPABILITY_NAMED_IAM          \
+           --config-file samconfig.toml                 \
+           --no-confirm-changeset                       \
+           --tags \
+              Project=${PROJECT_ID}
 
 # echo "Please verify the Boto3 >> `pip3 install boto3` ..."
 # ./get-vars.py ${PROJECT_ID} > local-env.json
