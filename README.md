@@ -14,3 +14,16 @@ Provide a guidance & inspiration on how to use AWS SAM to develop a Serverless R
     cd sam-rest
     ./deploy.sh
     ```
+    
+## 2. SAM-APP
+
+Provide a guidance & inspiration on how to use AWS SAM to develop a simplified development workflows, supporting both ECS/EKS Container and Lambda functions 🎯🚀🌥
+
+* [x] [AWS Local Development](https://devsecops.job4u.io/en/serverless/sam-local): [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+    
+* [x] [Manual Deploy to AWS](https://devsecops.job4u.io/en/serverless/manual-deploy)
+
+    ```
+    cd sam-app
+    ./deploy.sh
+    ```
