@@ -24,7 +24,7 @@ exports.getByIdHandler = async (event) => {
   // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB/DocumentClient.html#get-property
   var params = {
     TableName : tableName,
-    Key: { id: id },
+    Key: { LoginAlias: id },
   };
   const data = await docClient.get(params).promise();
   const item = data.Item;

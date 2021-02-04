@@ -102,12 +102,31 @@ Resources:
 
   ## DynamoDB table to store item: {id: &lt;ID&gt;, name: &lt;NAME&gt;}
   EmployeeTable:
-    # Type: AWS::DynamoDB::Table
-    Type: AWS::Serverless::SimpleTable
+    Type: AWS::DynamoDB::Table
+    # Type: AWS::Serverless::SimpleTable
     Properties:
-      PrimaryKey:
-        Name: id
-        Type: String
+      AttributeDefinitions:
+      - AttributeName: LoginAlias
+        AttributeType: S
+      - AttributeName: ManagerLoginAlias
+        AttributeType: S
+      KeySchema:
+      - AttributeName: LoginAlias
+        KeyType: HASH
+      GlobalSecondaryIndexes: 
+      - IndexName: DirectReports
+        KeySchema: 
+        - AttributeName: ManagerLoginAlias
+          KeyType: HASH
+        Projection: 
+          NonKeyAttributes:
+          - LoginAlias
+          - FirstName
+          - LastName
+          ProjectionType: INCLUDE
+        ProvisionedThroughput: 
+          ReadCapacityUnits: 2
+          WriteCapacityUnits: 2
       ProvisionedThroughput:
         ReadCapacityUnits: 2
         WriteCapacityUnits: 2
