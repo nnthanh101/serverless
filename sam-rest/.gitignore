@@ -1,5 +1,7 @@
 node_modules
+
 .aws-sam
+packaged.yaml
 
 local-env.json
 env.json
