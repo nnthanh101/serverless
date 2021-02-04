@@ -53,7 +53,7 @@ cdk bootstrap aws://${AWS_ACCOUNT}/${AWS_REGION} \
     --termination-protection \
     --tags cost=Job4U
 
-cd sam-rest
+cd cicd-pipeline
 
 echo "Install the dependencies, unit test, and build ..."
 npm install
@@ -85,7 +85,7 @@ git config --global user.email "nnthanh101@gmail.com"
 
 git init
 git add .
-git commit -m "🚀 CI/CD Pipeline"
+git commit -m "🚀 CI/CD Pipeline >> ./deploy.sh"
 git remote add origin https://git-codecommit.$AWS_REGION.amazonaws.com/v1/repos/$PROJECT_ID
 git push -u origin master
 
