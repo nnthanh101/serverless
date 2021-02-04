@@ -84,7 +84,12 @@ export class CicdPipelineStack extends cdk.Stack {
       ],
     });
 
-    /** Deploy stage */
+    /** 
+     * Step 3. Deploy stage 
+     * 
+     * 3.1. CreateChangeSet
+     * 3.2. Deploy
+     */
     pipeline.addStage({
       stageName: 'DeployToDev',
       actions: [
