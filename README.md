@@ -1,8 +1,8 @@
-# Serverless
+# Serverless Application Model (SAM)
 
 To build Web-apps & Mobile-apps that scale automatically on low-cost, fully-managed Serverless architecture.
 
-## 1. SAM-REST
+## 1.1. SAM-REST
 
 Provide a guidance & inspiration on how to use AWS SAM to develop a Serverless RESTful API.
 
@@ -15,7 +15,7 @@ Provide a guidance & inspiration on how to use AWS SAM to develop a Serverless R
     ./deploy.sh
     ```
     
-## 2. SAM-APP
+## 1.2. SAM-APP
 
 Provide a guidance & inspiration on how to use AWS SAM to develop a simplified development workflows, supporting both ECS/EKS Container and Lambda functions 🎯🚀🌥
 
@@ -27,3 +27,11 @@ Provide a guidance & inspiration on how to use AWS SAM to develop a simplified d
     cd sam-app
     ./deploy.sh
     ```
+
+## 2. CI/CD Pipeline
+
+Using CDK to create the CI/CD pipeline which consists of the following resources: Amazon CodePipeline, Amazon CodeCommit, Amazon CodeBuild and Amazon CodeDeploy.
+
+    <p align="center">
+        <img src="README/images/SAM_CICD-Pipeline.png" alt="SAM CI/CD Pipeline"/>
+    </p>
