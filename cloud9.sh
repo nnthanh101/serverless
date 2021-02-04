@@ -25,6 +25,8 @@ sudo npm install -g aws-cdk
 
 sudo pip3 install boto3
 
+pip3 install git-remote-codecommit
+
 echo "[x] Verify AWS CLI": $(aws  --version)
 echo "[x] Verify git":     $(git  --version)
 echo "[x] Verify jq":      $(jq   --version)

@@ -91,20 +91,20 @@ export class CicdPipelineStack extends cdk.Stack {
      * 3.2. Deploy
      */
     pipeline.addStage({
-      stageName: 'DeployToDev',
+      stageName: 'Deploy',
       actions: [
         new codePipelineActions.CloudFormationCreateReplaceChangeSetAction({
           actionName: 'CreateChangeSet',
           templatePath: buildOutput.atPath(configurationMetaData.samTemplatePath),
-          stackName: configurationMetaData.stackName,
+          stackName: configurationMetaData.samStackName,
           adminPermissions: true,
-          changeSetName: configurationMetaData.stackName + '-changeset',
+          changeSetName: configurationMetaData.samStackName + '-changeset',
           runOrder: 1
         }),
         new codePipelineActions.CloudFormationExecuteChangeSetAction({
           actionName: 'Deploy',
-          stackName: configurationMetaData.stackName,
-          changeSetName: configurationMetaData.stackName + '-changeset',
+          stackName: configurationMetaData.samStackName,
+          changeSetName: configurationMetaData.samStackName + '-changeset',
           runOrder: 2
         }),
       ]

@@ -1,6 +1,7 @@
 /** Configuration MetaData file */
 export const configurationMetaData = {
-      codeCommitRepoName: "sam-rest",
-      stackName:          "CICD-Pipeline-Stack",
-      samTemplatePath:    "packaged.yaml"
+      codeCommitRepoName:    "sam-rest",
+      cicdPipelinestackName: "CICD-Pipeline-Stack",
+      samStackName:          "SAM-REST-Stack",
+      samTemplatePath:       "packaged.yaml"
 }

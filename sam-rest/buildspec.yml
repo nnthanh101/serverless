@@ -11,8 +11,10 @@ phases:
       ## Installing project dependencies
       - cd src/lambda-handlers/employee-service
       - npm install
+  
   pre_build:
     commands:
+      - cd ../../..
       ## Discover and run unit tests in the '__tests__' directory
       - npm run test
       ## Remove all unit tests to reduce the size of the package that will be ultimately uploaded to Lambda
@@ -23,15 +25,19 @@ phases:
   build:
     commands:
       ## Use AWS SAM to package the application by using AWS CloudFormation
-      - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template packaged.yaml
-post_build:
+      # - aws cloudformation package --template template.yml --s3-bucket $S3_BUCKET --output-template packaged.yaml
+      ## Use Build phase to build your artifacts (compile, etc.)
+      - export SAM_CLI_TELEMETRY=0
+      - sam build
+
+  post_build:
     commands:
       ## Use Post-Build for notifications, git tags, upload artifacts to S3
-      - sam package --s3-bucket $PACKAGE_BUCKET --output-template-file template-export.yaml
+      - sam package --s3-bucket $PACKAGE_BUCKET --output-template-file packaged.yaml
 
 artifacts:
-  type: zip
-  # discard-paths: yes
+  # type: zip
+  discard-paths: yes
   files:
     ## List of local artifacts that will be passed down the pipeline
     - packaged.yaml

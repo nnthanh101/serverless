@@ -11,7 +11,7 @@ function _logger() {
 
 export PROJECT_ID=sam-rest
 
-export AWS_PROFILE=nnthanh
+export AWS_PROFILE=default
 export AWS_ACCOUNT=$(aws sts get-caller-identity | jq -r '.Account' | tr -d '\n')
 export AWS_REGION=${AWS_REGION:-"ap-southeast-1"}
 
@@ -53,6 +53,7 @@ cdk bootstrap aws://${AWS_ACCOUNT}/${AWS_REGION} \
     --termination-protection \
     --tags cost=Job4U
 
+# cat cicd-pipeline/config/config.ts
 cd cicd-pipeline
 
 echo "Install the dependencies, unit test, and build ..."
@@ -75,7 +76,14 @@ echo
 cdk deploy --all --require-approval never
 
 ## Commit code to the CodeCommit repository: 
-cd ../sam-rest
+## pip install git-remote-codecommit <-- cloud9.sh
+# cd ../sam-rest
+cd ..
+git clone codecommit::ap-southeast-1://$PROJECT_ID dist/sam-rest
+
+rsync -av -R sam-rest/ dist/
+
+cd dist/sam-rest
 
 git config --global credential.helper '!aws codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
@@ -83,15 +91,20 @@ git config --global credential.UseHttpPath true
 git config --global user.name "Thanh Nguyen"
 git config --global user.email "nnthanh101@gmail.com"
 
+# aws codecommit list-repositories
+# git remote rm origin
 git init
 git add .
-git commit -m "🚀 CI/CD Pipeline >> ./deploy.sh"
-git remote add origin https://git-codecommit.$AWS_REGION.amazonaws.com/v1/repos/$PROJECT_ID
+git commit -m "🚀 CI/CD Pipeline >> employee-service"
+git remote add origin codecommit::$AWS_REGION://$PROJECT_ID
+# git remote add origin codecommit::ap-southeast-1://sam-rest
+# git remote add origin https://git-codecommit.$AWS_REGION.amazonaws.com/v1/repos/$PROJECT_ID
 git push -u origin master
 
 ## Danger!!! Cleanup the CDK Stack
 # echo "Cleanup the CDK Stack ..."
-# cdk destroy
+# cd ../../cicd-pipeline
+# cdk destroy --require-approval never
 
 ended_time=$(date '+%d/%m/%Y %H:%M:%S')
 echo

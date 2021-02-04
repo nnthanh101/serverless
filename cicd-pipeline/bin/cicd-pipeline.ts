@@ -6,4 +6,4 @@ import { CicdPipelineStack } from '../lib/cicd-pipeline-stack';
 import { configurationMetaData } from "../config/config";
 
 const app = new cdk.App();
-new CicdPipelineStack(app, configurationMetaData.stackName);
+new CicdPipelineStack(app, configurationMetaData.cicdPipelinestackName);
