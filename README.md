@@ -32,6 +32,6 @@ Provide a guidance & inspiration on how to use AWS SAM to develop a simplified d
 
 Using CDK to create the CI/CD pipeline which consists of the following resources: Amazon CodePipeline, Amazon CodeCommit, Amazon CodeBuild and Amazon CodeDeploy.
 
-    <p align="center">
-        <img src="README/images/SAM_CICD-Pipeline.png" alt="SAM CI/CD Pipeline"/>
-    </p>
+<p align="center">
+    <img src="README/images/SAM_CICD-Pipeline.png" alt="SAM CI/CD Pipeline"/>
+</p>
